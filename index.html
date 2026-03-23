@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EducaFácil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topo">
+    <div class="topo-conteudo">
+        <div>
+            <h1>EducaFácil</h1>
+            <p>Portal Escolar - Escola Horizonte do Saber</p>
+        </div>
+
+        <nav>
+            <button onclick="mostrarTela('dashboard')">Início</button>
+            <button onclick="mostrarTela('usuarios')">Usuários</button>
+            <button onclick="mostrarTela('solicitacoes')">Solicitações</button>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+
+    <section id="dashboard" class="tela ativa">
+        <h2>Painel do Sistema</h2>
+
+        <div class="cards-resumo">
+            <div class="card-resumo">
+                <h3>Usuários</h3>
+                <p id="totalUsuarios">0</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Solicitações</h3>
+                <p id="totalSolicitacoes">0</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Pendentes</h3>
+                <p id="totalPendentes">0</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Concluídas</h3>
+                <p id="totalConcluidas">0</p>
+            </div>
+        </div>
+
+        <div class="bloco-info">
+            <h3>Sobre o sistema</h3>
+            <p>
+                O EducaFácil é um portal escolar fictício desenvolvido para registrar
+                pedidos de alunos e solicitantes, acompanhar o andamento das solicitações
+                e atualizar o status de cada pedido de forma simples e intuitiva.
+            </p>
+        </div>
+    </section>
+
+    <section id="usuarios" class="tela">
+        <div class="cabecalho-secao">
+            <h2>Cadastro de Usuários</h2>
+            <p>Cadastre estudantes ou solicitantes do sistema</p>
+        </div>
+
+        <form id="formUsuario" class="form-box">
+            <div class="grupo-campos">
+                <input type="text" id="nomeUsuario" placeholder="Nome completo" required>
+                <input type="email" id="emailUsuario" placeholder="E-mail" required>
+            </div>
+
+            <div class="grupo-campos">
+                <input type="text" id="matriculaUsuario" placeholder="Matrícula" required>
+                <select id="tipoUsuario" required>
+                    <option value="">Selecione o tipo</option>
+                    <option value="Estudante">Estudante</option>
+                    <option value="Solicitante">Solicitante</option>
+                </select>
+            </div>
+
+            <button type="submit">Cadastrar Usuário</button>
+        </form>
+
+        <h3 class="subtitulo">Usuários cadastrados</h3>
+        <div id="listaUsuarios" class="grid-cards"></div>
+    </section>
+
+    <section id="solicitacoes" class="tela">
+        <div class="cabecalho-secao">
+            <h2>Solicitações</h2>
+            <p>Registre e acompanhe os pedidos realizados</p>
+        </div>
+
+        <form id="formSolicitacao" class="form-box">
+            <div class="grupo-campos">
+                <input type="text" id="tituloSolicitacao" placeholder="Título da solicitação" required>
+                <select id="usuarioSolicitacao" required>
+                    <option value="">Selecione o usuário</option>
+                </select>
+            </div>
+
+            <div class="grupo-campos">
+                <select id="tipoSolicitacao" required>
+                    <option value="">Tipo da solicitação</option>
+                    <option value="Declaração">Declaração</option>
+                    <option value="Histórico Escolar">Histórico Escolar</option>
+                    <option value="Revisão de Nota">Revisão de Nota</option>
+                    <option value="2ª Via de Documento">2ª Via de Documento</option>
+                </select>
+
+                <select id="statusSolicitacao">
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em análise">Em análise</option>
+                    <option value="Concluída">Concluída</option>
+                </select>
+            </div>
+
+            <textarea id="descricaoSolicitacao" placeholder="Descrição da solicitação" required></textarea>
+
+            <button type="submit">Cadastrar Solicitação</button>
+        </form>
+
+        <h3 class="subtitulo">Lista de Solicitações</h3>
+        <div id="listaSolicitacoes" class="grid-cards"></div>
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
