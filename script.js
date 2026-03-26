@@ -1,152 +1,163 @@
-let usuarios = [];
-let solicitacoes = [];
+const menuButtons = document.querySelectorAll(".menu-btn");
+const pages = document.querySelectorAll(".page");
 
-function mostrarTela(id) {
-    const telas = document.querySelectorAll(".tela");
-    telas.forEach(tela => tela.classList.remove("ativa"));
-    document.getElementById(id).classList.add("ativa");
-}
-
-const formUsuario = document.getElementById("formUsuario");
+const formCadastro = document.getElementById("formCadastro");
 const formSolicitacao = document.getElementById("formSolicitacao");
+
 const listaUsuarios = document.getElementById("listaUsuarios");
 const listaSolicitacoes = document.getElementById("listaSolicitacoes");
-const selectUsuarioSolicitacao = document.getElementById("usuarioSolicitacao");
+const usuarioSolicitacao = document.getElementById("usuarioSolicitacao");
 
-formUsuario.addEventListener("submit", function (e) {
-    e.preventDefault();
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+let solicitacoes = JSON.parse(localStorage.getItem("solicitacoes")) || [];
+let usuarioAtual = JSON.parse(localStorage.getItem("usuarioAtual")) || null;
 
-    const nome = document.getElementById("nomeUsuario").value.trim();
-    const email = document.getElementById("emailUsuario").value.trim();
-    const matricula = document.getElementById("matriculaUsuario").value.trim();
-    const tipo = document.getElementById("tipoUsuario").value;
+menuButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    menuButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
 
-    const novoUsuario = {
-        id: Date.now(),
-        nome,
-        email,
-        matricula,
-        tipo
-    };
+    const target = button.dataset.target;
+    pages.forEach(page => page.classList.remove("active"));
+    document.getElementById(target).classList.add("active");
 
-    usuarios.push(novoUsuario);
-    renderizarUsuarios();
-    atualizarSelectUsuarios();
-    atualizarResumo();
-    formUsuario.reset();
+    if (target === "perfil") mostrarPerfil();
+  });
 });
 
-formSolicitacao.addEventListener("submit", function (e) {
-    e.preventDefault();
+formCadastro.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    const titulo = document.getElementById("tituloSolicitacao").value.trim();
-    const descricao = document.getElementById("descricaoSolicitacao").value.trim();
-    const usuario = document.getElementById("usuarioSolicitacao").value;
-    const tipo = document.getElementById("tipoSolicitacao").value;
-    const status = document.getElementById("statusSolicitacao").value;
+  const novoUsuario = {
+    id: Date.now(),
+    nome: document.getElementById("nomeCadastro").value,
+    email: document.getElementById("emailCadastro").value,
+    matricula: document.getElementById("matriculaCadastro").value,
+    tipo: document.getElementById("tipoCadastro").value
+  };
 
-    const novaSolicitacao = {
-        id: Date.now(),
-        titulo,
-        descricao,
-        usuario,
-        tipo,
-        status
-    };
+  usuarios.push(novoUsuario);
+  usuarioAtual = novoUsuario;
 
-    solicitacoes.push(novaSolicitacao);
-    renderizarSolicitacoes();
-    atualizarResumo();
-    formSolicitacao.reset();
+  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  localStorage.setItem("usuarioAtual", JSON.stringify(usuarioAtual));
+
+  formCadastro.reset();
+  renderUsuarios();
+  atualizarSelectUsuarios();
+  mostrarPerfil();
+
+  alert("Usuário cadastrado!");
 });
 
-function renderizarUsuarios() {
-    listaUsuarios.innerHTML = "";
+formSolicitacao.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    if (usuarios.length === 0) {
-        listaUsuarios.innerHTML = `<div class="vazio">Nenhum usuário cadastrado.</div>`;
-        return;
-    }
+  const usuarioId = Number(usuarioSolicitacao.value);
+  const usuario = usuarios.find(u => u.id === usuarioId);
 
-    usuarios.forEach(usuario => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-            <h4>${usuario.nome}</h4>
-            <p><strong>Email:</strong> ${usuario.email}</p>
-            <p><strong>Matrícula:</strong> ${usuario.matricula}</p>
-            <p><strong>Tipo:</strong> ${usuario.tipo}</p>
-        `;
-        listaUsuarios.appendChild(div);
-    });
+  if (!usuario) {
+    alert("Selecione um usuário.");
+    return;
+  }
+
+ const novaSolicitacao = {
+  id: Date.now(),
+  usuario: usuario.nome,
+  tipo: document.getElementById("tipoSolicitacao").value,
+  descricao: document.getElementById("descricaoSolicitacao").value,
+  status: "Pendente"
+};
+
+  solicitacoes.push(novaSolicitacao);
+  localStorage.setItem("solicitacoes", JSON.stringify(solicitacoes));
+
+  formSolicitacao.reset();
+  renderSolicitacoes();
+
+  alert("Solicitação registrada!");
+});
+
+function renderUsuarios() {
+  if (usuarios.length === 0) {
+    listaUsuarios.innerHTML = `<p class="empty">Nenhum usuário cadastrado.</p>`;
+    return;
+  }
+
+  listaUsuarios.innerHTML = usuarios.map(usuario => `
+    <div class="item">
+      <strong>${usuario.nome}</strong>
+      <span>${usuario.email}</span><br>
+      <span>Matrícula: ${usuario.matricula}</span><br>
+      <span>Tipo: ${usuario.tipo}</span>
+    </div>
+  `).join("");
 }
 
 function atualizarSelectUsuarios() {
-    selectUsuarioSolicitacao.innerHTML = `<option value="">Selecione o usuário</option>`;
-
-    usuarios.forEach(usuario => {
-        const option = document.createElement("option");
-        option.value = usuario.nome;
-        option.textContent = usuario.nome;
-        selectUsuarioSolicitacao.appendChild(option);
-    });
+  usuarioSolicitacao.innerHTML = `
+    <option value="">Selecione</option>
+    ${usuarios.map(u => `<option value="${u.id}">${u.nome}</option>`).join("")}
+  `;
 }
 
-function classeStatus(status) {
-    if (status === "Pendente") return "pendente";
-    if (status === "Em análise") return "analise";
-    return "concluida";
+function renderSolicitacoes() {
+  if (solicitacoes.length === 0) {
+    listaSolicitacoes.innerHTML = `<p class="empty">Nenhuma solicitação.</p>`;
+    return;
+  }
+
+  listaSolicitacoes.innerHTML = solicitacoes.map(s => `
+    <div class="item">
+      <strong>${s.usuario}</strong>
+      <span>Tipo: ${s.tipo}</span><br>
+      <span>${s.descricao}</span><br>
+      <span>Status: <b>${s.status}</b></span><br><br>
+
+      <button onclick="mudarStatus(${s.id}, 'Pendente')">🟡</button>
+      <button onclick="mudarStatus(${s.id}, 'Em análise')">🔵</button>
+      <button onclick="mudarStatus(${s.id}, 'Concluída')">🟢</button>
+    </div>
+  `).join("");
 }
 
-function renderizarSolicitacoes() {
-    listaSolicitacoes.innerHTML = "";
+function mostrarPerfil() {
+  if (!usuarioAtual) return;
 
-    if (solicitacoes.length === 0) {
-        listaSolicitacoes.innerHTML = `<div class="vazio">Nenhuma solicitação cadastrada.</div>`;
-        return;
+  document.getElementById("perfilNomeTitulo").textContent = usuarioAtual.nome;
+  document.getElementById("perfilTipoTitulo").textContent = usuarioAtual.tipo;
+
+  document.getElementById("perfilNome").value = usuarioAtual.nome;
+  document.getElementById("perfilEmail").value = usuarioAtual.email;
+  document.getElementById("perfilMatricula").value = usuarioAtual.matricula;
+  document.getElementById("perfilTipo").value = usuarioAtual.tipo;
+}
+function resetarDados() {
+  if (confirm("Tem certeza que quer apagar tudo?")) {
+    localStorage.clear();
+    location.reload();
+  }
+}
+
+// BLOQUEAR EDIÇÃO (somente visualização)
+document.querySelectorAll("#perfil input, #perfil select").forEach(el => {
+  el.setAttribute("readonly", true);
+  el.setAttribute("disabled", true);
+});
+function mudarStatus(id, novoStatus) {
+  solicitacoes = solicitacoes.map(s => {
+    if (s.id === id) {
+      s.status = novoStatus;
     }
+    return s;
+  });
 
-    solicitacoes.forEach(solicitacao => {
-        const div = document.createElement("div");
-        div.className = "card";
-
-        div.innerHTML = `
-            <h4>${solicitacao.titulo}</h4>
-            <p><strong>Usuário:</strong> ${solicitacao.usuario}</p>
-            <p><strong>Tipo:</strong> ${solicitacao.tipo}</p>
-            <p><strong>Descrição:</strong> ${solicitacao.descricao}</p>
-            <p><strong>Status:</strong> 
-                <span class="status ${classeStatus(solicitacao.status)}" id="status-${solicitacao.id}">
-                    ${solicitacao.status}
-                </span>
-            </p>
-
-            <select onchange="alterarStatus(${solicitacao.id}, this.value)">
-                <option value="Pendente" ${solicitacao.status === "Pendente" ? "selected" : ""}>Pendente</option>
-                <option value="Em análise" ${solicitacao.status === "Em análise" ? "selected" : ""}>Em análise</option>
-                <option value="Concluída" ${solicitacao.status === "Concluída" ? "selected" : ""}>Concluída</option>
-            </select>
-        `;
-
-        listaSolicitacoes.appendChild(div);
-    });
+  localStorage.setItem("solicitacoes", JSON.stringify(solicitacoes));
+  renderSolicitacoes();
 }
 
-function alterarStatus(id, novoStatus) {
-    const solicitacao = solicitacoes.find(s => s.id === id);
-
-    if (solicitacao) {
-        solicitacao.status = novoStatus;
-        renderizarSolicitacoes();
-        atualizarResumo();
-    }
-}
-
-function atualizarResumo() {
-    document.getElementById("totalUsuarios").textContent = usuarios.length;
-    document.getElementById("totalSolicitacoes").textContent = solicitacoes.length;
-    document.getElementById("totalPendentes").textContent =
-        solicitacoes.filter(s => s.status === "Pendente").length;
-    document.getElementById("totalConcluidas").textContent =
-        solicitacoes.filter(s => s.status === "Concluída").length;
-}
+renderUsuarios();
+renderSolicitacoes();
+atualizarSelectUsuarios();
+mostrarPerfil();
+//localStorage.clear();
