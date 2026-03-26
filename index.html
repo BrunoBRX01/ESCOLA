@@ -1,134 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EducaFácil</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EducaFácil</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">
+        <h1>EducaFácil</h1>
+        <p>Portal de Solicitações</p>
+      </div>
 
-<header class="topo">
-    <div class="topo-conteudo">
-        <div>
-            <h1>EducaFácil</h1>
-            <p>Portal Escolar - Escola Horizonte do Saber</p>
+      <nav class="menu">
+        <button class="menu-btn active" data-target="cadastro">Cadastro</button>
+        <button class="menu-btn" data-target="novaSolicitacao">Nova Solicitação</button>
+        <button class="menu-btn" data-target="solicitacoes">Solicitações Cadastradas</button>
+        <button class="menu-btn" data-target="perfil">⚙️ Meu Perfil</button>
+        <button onclick="resetarDados()" class="logout-btn">🗑️ Resetar Dados</button>
+        <button class="menu-btn" data-target="agradecimento">Agradecimento</button>
+      </nav>
+
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <h2>Escola Sabor Estudo</h2>
+        
+      </header>
+      <section id="agradecimento" class="page">
+  <div class="agradecimento-bg">Professor Higor Luiz</div>
+
+  <div class="card agradecimento-card">
+    <h2>Obrigado, professor Higor Luiz!😘</h2>
+    <p>
+      Projeto finalizado com sucesso. Receba esse sistema com carinho.
+    </p>
+
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEhUSExIVFRUVFxUVFhUXFRUVFRUVFxUXFxUYFhUYHSggGBomGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OFQ8QFS0dFR0tKy0tLSsrLS0rLS0rKystKy0tLS0tLSstLSsrLS0tLS0tNy0yNy0rLS0rKzctLSsrLf/AABEIARMAtwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAFAAIDBAYBB//EADwQAAEDAgQCCAQEBAYDAAAAAAEAAgMEEQUSITFBUQYTImFxgZGhMrHB8FJy0fFCgpLhFCMkM2KyB0PS/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAECAwT/xAAeEQEBAQEAAwADAQAAAAAAAAAAARECEiExA0FRYf/aAAwDAQACEQMRAD8AqhSBRJwKtKUJ1lGHJ4cmHbJtk66SAbZIpyRQEa4U5NleGgucQANSToAOZKQNITHuAFyQBzOgWRxjpgSS2nGm3WOG/wCVv1PosxU1D5TeR7nnvN/QbBK08emCviOgljv+dv6qYG+y8qEV0+GV8Zux7m/lJHslOj8a9RKY5ZDC+lb2nLOMzfxgWcPEDR3t5rWQzte0PYQ5p2IVS6RFRPClKjcEEgcFA8Ky5QPCArPCryBWnhV5AgKcoSTpQkkG0SSSQHQU8FRrqYSgpwKhungoCUJFMBTgUw4QvOelOOmoeY2H/JadLf8AsI/iPdyHmtZ0xrjFTOsbOkIjH83xH+kH1XmzVPVVITQp2xdy7FGiNLTEmyztaTlREVk4xovNhrmi9rofKLKdXihIxFui+JGKTq3HsSG1uAfwPnsfLkqUrdLqk8K+az65eoEJjgocMqeshjfxc0X/ADbO9wVM5aMkLlA5WHKF4QFdyrSKy5QSBAVJQkuyJIDYpJJJAl0LiSA6nApqQTCQFOBTAuhAZD/yJL/ss4dt3mMoHzKxzFsf/IcWkL+Re31DSP8AqVjWqOl8rdNuFr8Bo7m6x0B1W66KVDdioaz4K1FM3IdBfl3bLFYrTZXGw0XolXECLhZHpJF2SbH7/dKmzL39myoSKzdQShOJ6bDodLenLfwvcPI2d9SjRWX6J1rI4pMx1z3DQLm2Ua24DvK0FFWsmbmYdL2N9wVrKxsOcoXqdyicEyVnqCQKzIq8iApyJLsiSQbBJJJAJJJJAJJJJAdBT2lRpwTDKdPqk2jiyix7YffW7bggDwd7rHNAXoXTGkElOXcYjnHh8Lh6G/ksDSRNc8Nc8MBNi4gkDxtwU1UW4IxzCI4dUFjrjgqVJhjXxyOMoY9mjGXDutOty112hrLAC/aJJ2TcHpHzS9WDrr7An6LKxtz1/jYx9L2Mblf7an90IxTpQ2QZWR/zO39ENmwV4zON32/hae0QDruPldPjlpnyMywuiAa0SR5hKJHNcDu4Ncy9tQDr3apzB1u/FAyEnUDyUMoWkjwOzHSlmUOJIFrBoJvYDgO5Z+oFiUpRZ6S08z8gblOQ9kEaDNub2+I7brUdGqXJDm/Gc3lYAfIoNhxL+qiaW/E51hmNja3WO4XDb2A00vqVsGxhoAGwAA8Ar4nvUd31IjcoXqd6hetGSu9V5ArL1XkQFOQJLsgSSDXricQuJhxJJJIEupLoTDiSdZKyAr11P1kUkf42Ob6ggLy2BgOjtD9V60F5v0oo+pqX2+F/+Y3+b4h/UHKeorm5UTTlGhOm3Id470W6D/7oIGt0B6zslH+hWIRRTAybDU7ajjusb8dEs8o0EkzYpr20za+F/ZayLDYSM4DSbXBsD+6yOMV0Mpe6OGYtJs05btuTtcBHYGiKnbrZxaM4vcZrapRfVZ3phibierJFhsBoFiJXXRjH5rvJvugpCqRl3f02/RujjbE2Rre09vadck7na+w04Im5Uujo/wBNF4H/ALFXXLefGFRPUL1O9QOQSB6rvVh6ryICrIklKkg2xITSFImFBGpWXSkEgQC6knIDlkrLqQTBALNdOqDPC2UDWM6/kdYH0Ib7otW41TxfHK0H8IOZ39LblZ3FumLHNcyOLMHAtJk2sdPhBufMhI2ThfwKv4Yxme7mhzeR2Q0ad6N4JBTSODZC5h1uQTY8lnY05v6aykrMkQzOY1rdBZxNu7ayrVXSOE3YJLk+nqmwUVBF1pe8uDL5eOfXs7mwFu7is/X4qHuPVsDWbAc+XgEsXbijVS5nE96jAubDz2280x51RCngytzkb8/0T+J+t1hs9I6nibTveXsFpGPHabx4C2/K909wWX6I1jg4x9nK+79hmDgLAX3tbgtS5acfGfX1A9QuU7lA5NKB6rSK09VpEBVlSSlSQGxKY4rpKaUgS4mSSBou4gDmTYINX9JWN0jGc89mj/68vVFpyaPNQ+sxuKM2uXu/C3W3idgsrWYxNLoXWb+FvZHnxPqm0dW1ujm6LO9/xpz+P+i8+PTu+BjWDvu53qbD2QysE8nxyPN+F7N9BotNhLqeUgAgHkUUqsMaG3FvZZ+da+HLyupoi3gqZWuxuELKSt1Kvm6z75wQrTE6CJzezILse0fxAC4dbzt59yoQWvqpcMI6xtxcXtr36LRY90bAYZoQdBmLP+PEt8E7c9FJvtUpoYMwzep1TK+piBIjaLc0CMpVighc43OyBu+l3DaPO7M7ZTV8ud4jbo1u/erFU8xtDeLvYclUpW5Wlx1J496lpJnpwn/Mt7jTW+iM02OvZpIM457OH0KFxQk5PxFwJPdufYIrNRZtkeWF4aK02IRy/A65/CdHDyUjlmJcOI1A9N0+LEpo9Hdtv/L4v6v1VzuM7+Owccq8iZS4nHJoDZ34XaHy4FSSK0KkqSUySYa1C8exdtO3m918rfmT3Ik48eC81xOuM8zpOBNm9zB8P6+ZU24cmpZKt8rs0ji48L7DuA2Cc2NQU4RKmjusrW/MVmRqzHT3U3VWKuxRi3JTq8CeqsdDbwRGnxeRoyuJI57+qbVtAF+KE3JOqC+DNXO1wve/NZesYM2ivSRd6H1EZCfMT3diGB1nA8j9V6PBiZa1rg3NbW19xxC83DtQtMytLoBbcdk/RPsvx36hr4qZ73mGBzS7g5144ydxG0anW9sxIHJXKOjAyttqSP2UFLGALopQuu9vdr6bKbV88yG4rh+d2bcXsgtW0XDRsDqtjXx5GtHMXJ8Rf1WWqmcbaX08Eadiuaste3KAdDfh6FafDA2VgcBa/PgQSD7g69yyRBa43Gh2PyRakxpkcbWgagcOe59yilGhMdtN1VqqZh1On3xQOfHnn4fU/ohFVXSP3eT7BEhWiOJQRDZwUdHi2XsSG44P3I/Nz8UIsTxTHNVz0z69tU9wIuDcHiNkll4Kl0fwny4HyXVp5M/F6B0jqMlNKRuW5R4vIb9V5/TtWz6Yv/0xHN7B73+ix1Ml0fC7C1GaGK5QyBlrFaPCor2KxroiCelI3UMjiPBGa0AmyFVbRqL8vf8AZEK0LrJLlVbKxI3VcEJTKe0IYlJECDdT9QutpChWM/VR8uCJ4E/NmZ+IXHiEsRoi1UMNlLJW9x/sr+xl86HZHWbZHuidMXuvy9hfW6BiLMfHZbbo6wQxcr+5WbZTxxjnSEDh36WH2EFqyBqBoLea01ZCS1xJ7Tr3P0Cx+JOs1JX6Cqyozm33ZRhoTWi5unlpVsnDyTci6SnNQDC1QyNV4RXUUsKCxQcFxSyNskq1ONb0tN6c9zmH3t9VkqVy2GPszU8g5AO/pId9Fi4Haqukcj1MLhaDDHWCAYcbo7SvDR4LCuiIcSqXMN9cp35jvQGtxE3PO362+a1TntdosfjtOGS6DQjyuPsKuU9xfw1lxc6q9/h+KH4Y7QLSUUQNkqrkPbE3ik+m5ItNQjgEPqLsBPAJKZ/GmEb/ADQ2ii1urdVOZXW4K9TUeUAnyV7kZ5t0Wwql0HMrU08N2hrfXvWUikMY3ue7gtDHiHU0xkJseF9z4KGiDGp+paWl178OSw9bVGV1h+yVVWSVDzroTurNJhwGnmnJhW78Vm03AJGAhFmUdk40hCepwG6glMZHY6olUNAQupqeCqJom0i2iZLDcIZBVFExJcJUQIqG2K4p6luqSYa2duZjm82keosvP4zst8X2BPIFYWFtyr6ZcwUopbK//iyTa6HFuVt0/DzfVZVvL+mgozso8ew7rIy4DtN1CdSE390bjbmGqldmx55R1WUrS4XX7IF0jw4wTEfwv7TfM6j1+YUNDUWKuspf09OppWuGqyHSTEQ9xjj2F8zu/kFTrsZcGZGnU6KOip9OfNJU9+jsKpADco3DBmu62g2UNJSFxsBp80c6oMGugCleYFvgDRnfsOHNZzFqx0rgCdOA4AIjjOIZjpsNAEIgjubncqpE9VcpGAAAIlTtvwUNFTrQ4bh97fugfFWGnK7VDLvyRueNsTb/AGVjMaxLUgFBaH4nOgb3XKnqZ7lSQ0mlzuVUZ9e0UA1RJj7CyrthsrEbUqqGSDmkmzvSQBvFZssLz3WHi7QfNVeh+NRwNla6minL7aSAG42s02OXXXbioukcvYa38TvYD9SECLC2xWlZc3KLVThIS5rRGCbiMEkAcg52p81FG/KbahQRVRN+YVuijzHtDzWd9NZ7avo5EJCFqZ8M6sXWHwCUxSgcFscexMNjuTYW8FLRkenmV0bbbsdv3HQj5eixkdxqEVxfEOtJA+H5qGkpL6lVL6Z2e/SKkgJNytNQUtxpqqVDT3NgFrcNowwZjb58EquelmhpRGNRqRqTwQLpFiYJyN2V7FsTDQQ3z/ssjO7+IpGqTPuQOeiuQxhBqiW7vBXaWr2V4y320uHjZaOCsaxtuf3xWIixC3FdmxM23SUI9IsWJvYrH1E11Yq5i6+qogXNk5Ctxaw6lL3X4D3ROo7KloBlbYKGphJStHMxA2YKc2tdUZm2XIZzsUGVU9JQVGqSaUtZXGUtuAMt7W7+fomSOJ0+gUEsJYbHfuINvRTRuTqeU9NGjVOBZB2FX6ZxKzrfnF5rAeNjwI3BCFY7UzSSWkdcC2UDRvjbmiTISdBuq89DJcFwJA4ohX2o01LfgjVPQE6WU1FSNIvcaeG6vNq2N0ba+19PNMRNh1G1na4jw0UtVUnU304fsqJrBx2++CFYril9AkaKrnzu304qo8GV7Yxpz7hxKb1mVt0TwTDD1ZmdoXaj8v8Aff0TkK1RxPCxew0IGhG3gUDN2mx0IWzipySTe91Sr8NbJ3O5qpWfU/jPNqF0zp1VhsjNxccwqhaU8T5Hvkuu0+6iKdTc+9OlLtaCjejNHGCLrN00lkcpKmzVm2UsfhALbW1vsEClFkexLtWKB1KcKoXOukoykrxnpNNlYjAKrAKRrBxRRys2sr9LPwQdzlLSya6qLGk6bXDS3S60cdMHN3B4DisVQ1egsfIi4Wjw7EmgDNp8h9VDRDVYPd2nZPdogdXhkrDfhz3C2QnD9bt8nLhYHXuQL/NNLCzOeBsfmqDdSSeC9FdhMZGvHa2hQXFejjbZoy491rphmaSDrpmR8Cbu8AtjjLmtjLRyG3jyWWom9Q8lwce+2tvAolV4tG5hGfU73aR9E0rOEz6A2Ule1u9rFB6CtaD8YA7zb5oxUTMe3RzT4EH5IAPUy6WQuWyu1hQ9xQKryjRVYjoiFRayHR7Koz69LcMqJUct0EaVfoX2SsVKJ1T9EGnKu1b0OkKIKicuprklSKkMhvcphRvIL3sL87BCKlmVxHfceB1TSYAkDZcSsg9X6LE8hF9QizsXZJwAKy5YnBTeYqfkrW0+IFuzgUWpcYFxcrAsnI4qxHWHmpvLSdyvTYqxr/4teHor8BFvf03+S8xp8SI4ovR46Rsdvv8ARI2kxfBxJq0a8e9Z1+Ck6BuvhqjdFjocO0fc6ff1ROCdjxobHTXwQesDPhL2bt+V1TlpOYXpktK125BQurwll9vv7ugmBfTkdyj6o8ytrPhDbaffJUThF+GyZZGVcw81CYVrHYNcXCo1WFlqelZAJkKswtspJIcqbI9BZhk0iqOKfM9Q3TTaSSkp4sxt5ripGjF1SxKPZ3LQ/RXE1wuLHigBbIiRoudWVKbxm24+YSdMCl7XJKhLUrJ5eoyUQXDXJt05yYQmhI19lLHPZVSV0OSw51YJR1feiNPi5aNHWWeDk8OS8Wk7bCnx944+auM6RG1j9hYZspGym/xBO5U4exrajpBcWbpxKqvxM2vcHms11i46U808Gj8mNH2sopMZJFkDMpUbijC1emqbqq+RRXSVYm9ESuJFSQRZnBvP5cU02r+HRWbm5/IJK44WFhwXFSUa5dcukpMpGAixQ+eny+HNEFXrfh8wgKS4uBPDUjkNsuFqlLVGUHiNzUwhWAFLFECjSxSDk4OUpgudAojEmR2ZdzKKxCWZATXTgVAHpwckerDYbpGAqNshUgnQrYaY1wNXTJdNFyj2VxwoxQ0uQXPxH2HJKhocnad8XAfh/urLirkRajkK4myFdTJEEkklCiUVV8B++K6kgBrVOxJJKq5SuGirkLiSUVTgFYhSSTCKpFj4qKPdJJCEkzQq9kkkxUTguBdSQR7VIAkkiA4NVzCWgyeAJHjp+qSSpIu9QOSSQFd6SSSDf//Z" />
+  </div>
+</section>
+      
+      <section id="cadastro" class="page active">
+        <div class="card">
+          <h2>Cadastro de Usuários</h2>
+          <p>Cadastre estudantes ou solicitantes do sistema.</p>
+
+          <form id="formCadastro" class="form-grid">
+            <input type="text" id="nomeCadastro" placeholder="Nome completo" required />
+            <input type="email" id="emailCadastro" placeholder="E-mail" required />
+            <input type="text" id="matriculaCadastro" placeholder="Matrícula" required />
+            
+            <select id="tipoCadastro" required>
+              <option value="">Escolha um tipo</option>
+              <option>Estudante</option>
+              <option>Professor</option>
+              <option>Responsável</option>
+              <option>Funcionário</option>
+            </select>
+
+            <input type="password" id="senhaCadastro" placeholder="Senha" required />
+            <button type="submit" class="primary-btn">Cadastrar usuário</button>
+          </form>
         </div>
 
-        <nav>
-            <button onclick="mostrarTela('dashboard')">Início</button>
-            <button onclick="mostrarTela('usuarios')">Usuários</button>
-            <button onclick="mostrarTela('solicitacoes')">Solicitações</button>
-        </nav>
-    </div>
-</header>
-
-<main class="container">
-
-    <section id="dashboard" class="tela ativa">
-        <h2>Painel do Sistema</h2>
-
-        <div class="cards-resumo">
-            <div class="card-resumo">
-                <h3>Usuários</h3>
-                <p id="totalUsuarios">0</p>
-            </div>
-
-            <div class="card-resumo">
-                <h3>Solicitações</h3>
-                <p id="totalSolicitacoes">0</p>
-            </div>
-
-            <div class="card-resumo">
-                <h3>Pendentes</h3>
-                <p id="totalPendentes">0</p>
-            </div>
-
-            <div class="card-resumo">
-                <h3>Concluídas</h3>
-                <p id="totalConcluidas">0</p>
-            </div>
+        <div class="card">
+          <h3>Usuários cadastrados</h3>
+          <div id="listaUsuarios" class="list-box">
+            <p class="empty">Nenhum usuário cadastrado ainda.</p>
+          </div>
         </div>
 
-        <div class="bloco-info">
-            <h3>Sobre o sistema</h3>
-            <p>
-                O EducaFácil é um portal escolar fictício desenvolvido para registrar
-                pedidos de alunos e solicitantes, acompanhar o andamento das solicitações
-                e atualizar o status de cada pedido de forma simples e intuitiva.
-            </p>
+        
+      </section>
+
+    
+      <section id="novaSolicitacao" class="page">
+        <div class="card">
+          <h2>Nova Solicitação</h2>
+          <p>Registre uma nova solicitação para um usuário.</p>
+
+          <form id="formSolicitacao" class="form-grid">
+            <select id="usuarioSolicitacao" required>
+              <option value="">Nenhum usuário cadastrado</option>
+            </select>
+
+            <select id="tipoSolicitacao" required>
+              <option value="">Selecione um tipo</option>
+              <option>Transferência</option>
+              <option>Bolsa de Estudo</option>
+              <option>Atestado</option>
+              <option>Histórico Escolar</option>
+              <option>Cancelamento de Matrícula</option>
+              <option>Outro</option>
+            </select>
+
+            <textarea id="descricaoSolicitacao" placeholder="Descrição da solicitação" rows="5" required></textarea>
+            <button type="submit" class="primary-btn">Registrar solicitação</button>
+          </form>
         </div>
-    </section>
+      </section>
 
-    <section id="usuarios" class="tela">
-        <div class="cabecalho-secao">
-            <h2>Cadastro de Usuários</h2>
-            <p>Cadastre estudantes ou solicitantes do sistema</p>
+      <section id="solicitacoes" class="page">
+        <div class="card">
+          <h2>Solicitações Cadastradas</h2>
+          <p>Visualize e gerencie todas as solicitações registradas.</p>
+
+          <div id="listaSolicitacoes" class="list-box">
+            <p class="empty">Nenhuma solicitação registrada ainda.</p>
+          </div>
         </div>
+      </section>
 
-        <form id="formUsuario" class="form-box">
-            <div class="grupo-campos">
-                <input type="text" id="nomeUsuario" placeholder="Nome completo" required>
-                <input type="email" id="emailUsuario" placeholder="E-mail" required>
-            </div>
+      <section id="perfil" class="page">
+        <div class="card">
+          <h2>Meu Perfil</h2>
+          <p>Visualize e edite suas informações pessoais.</p>
 
-            <div class="grupo-campos">
-                <input type="text" id="matriculaUsuario" placeholder="Matrícula" required>
-                <select id="tipoUsuario" required>
-                    <option value="">Selecione o tipo</option>
-                    <option value="Estudante">Estudante</option>
-                    <option value="Solicitante">Solicitante</option>
-                </select>
-            </div>
+          <div class="profile-header">
+            <h3 id="perfilNomeTitulo">Seu Nome</h3>
+            <span id="perfilTipoTitulo">Tipo de Usuário</span>
+          </div>
 
-            <button type="submit">Cadastrar Usuário</button>
-        </form>
+          <form id="formPerfil" class="form-grid">
+            <input type="text" id="perfilNome" placeholder="Nome completo" />
+            <input type="email" id="perfilEmail" placeholder="E-mail" />
+            <input type="text" id="perfilMatricula" placeholder="Matrícula" />
+            
+            <select id="perfilTipo">
+              <option value="">Tipo</option>
+              <option>Estudante</option>
+              <option>Professor</option>
+              <option>Responsável</option>
+              <option>Funcionário</option>
+            </select>
 
-        <h3 class="subtitulo">Usuários cadastrados</h3>
-        <div id="listaUsuarios" class="grid-cards"></div>
-    </section>
-
-    <section id="solicitacoes" class="tela">
-        <div class="cabecalho-secao">
-            <h2>Solicitações</h2>
-            <p>Registre e acompanhe os pedidos realizados</p>
+            <input type="password" id="perfilSenha" placeholder="Nova Senha (deixe em branco para não alterar)" />
+            <button type="submit" class="primary-btn">Salvar Alterações</button>
+          </form>
         </div>
+      </section>
+    </main>
+  </div>
 
-        <form id="formSolicitacao" class="form-box">
-            <div class="grupo-campos">
-                <input type="text" id="tituloSolicitacao" placeholder="Título da solicitação" required>
-                <select id="usuarioSolicitacao" required>
-                    <option value="">Selecione o usuário</option>
-                </select>
-            </div>
-
-            <div class="grupo-campos">
-                <select id="tipoSolicitacao" required>
-                    <option value="">Tipo da solicitação</option>
-                    <option value="Declaração">Declaração</option>
-                    <option value="Histórico Escolar">Histórico Escolar</option>
-                    <option value="Revisão de Nota">Revisão de Nota</option>
-                    <option value="2ª Via de Documento">2ª Via de Documento</option>
-                </select>
-
-                <select id="statusSolicitacao">
-                    <option value="Pendente">Pendente</option>
-                    <option value="Em análise">Em análise</option>
-                    <option value="Concluída">Concluída</option>
-                </select>
-            </div>
-
-            <textarea id="descricaoSolicitacao" placeholder="Descrição da solicitação" required></textarea>
-
-            <button type="submit">Cadastrar Solicitação</button>
-        </form>
-
-        <h3 class="subtitulo">Lista de Solicitações</h3>
-        <div id="listaSolicitacoes" class="grid-cards"></div>
-    </section>
-
-</main>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
